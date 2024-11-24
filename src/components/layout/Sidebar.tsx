@@ -4,7 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLanguage } from '@/hooks/useLanguage';
 
-export default function Sidebar() {
+interface SidebarProps {
+  onCloseMobile?: () => void;
+}
+
+export default function Sidebar({ onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
   const { t } = useLanguage();
 
@@ -17,27 +21,36 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="w-64 bg-blue-800 text-white h-screen p-4">
-      <div className="mb-8">
+    <div className="h-full flex flex-col text-white">
+      <div className="p-6">
         <h1 className="text-2xl font-bold">MEDDIC Analytics</h1>
       </div>
-      <nav>
+      
+      <nav className="flex-1 px-4">
         <ul className="space-y-2">
           {menuItems.map((item) => (
             <li key={item.path}>
               <Link
                 href={item.path}
-                className={`flex items-center p-3 rounded-lg hover:bg-blue-700 transition-colors ${
-                  pathname === item.path ? 'bg-blue-700' : ''
-                }`}
+                onClick={() => onCloseMobile?.()}
+                className={`
+                  flex items-center p-3 rounded-lg 
+                  transition-colors duration-200
+                  hover:bg-blue-700
+                  ${pathname === item.path ? 'bg-blue-700' : ''}
+                `}
               >
-                <span className="mr-3">{item.icon}</span>
-                {item.name}
+                <span className="mr-3 text-xl">{item.icon}</span>
+                <span className="font-medium">{item.name}</span>
               </Link>
             </li>
           ))}
         </ul>
       </nav>
+
+      <div className="p-4 text-sm text-blue-200">
+        <p>Version 1.0.0</p>
+      </div>
     </div>
   );
 }
