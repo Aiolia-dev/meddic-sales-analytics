@@ -100,6 +100,212 @@ const reportTypes = [
   { id: 'analysis', name: 'Analyse Avancée', icon: '🔍' },
 ];
 
+// Composants pour chaque type de rapport
+const MeddicPerformanceReport = ({ commonOptions }: { commonOptions: any }) => (
+  <>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Évolution du Score MEDDIC</h3>
+        <div className="h-[300px]">
+          <Line data={mockData.meddicTrends} options={commonOptions} />
+        </div>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Performance MEDDIC par Commercial</h3>
+        <div className="h-[300px]">
+          <Radar data={mockData.teamPerformance} options={commonOptions} />
+        </div>
+      </div>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Score MEDDIC Moyen</h4>
+        <p className="text-3xl font-bold text-blue-600">78%</p>
+        <p className="text-sm text-green-600 mt-2">↑ 4% vs période précédente</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Meilleur Critère</h4>
+        <p className="text-3xl font-bold text-blue-600">Champion</p>
+        <p className="text-sm text-green-600 mt-2">Score moyen: 85%</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Point d'Amélioration</h4>
+        <p className="text-3xl font-bold text-blue-600">Decision Process</p>
+        <p className="text-sm text-red-600 mt-2">Score moyen: 65%</p>
+      </div>
+    </div>
+  </>
+);
+
+const PipelineAnalysisReport = ({ commonOptions }: { commonOptions: any }) => (
+  <>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Distribution du Pipeline</h3>
+        <div className="h-[300px]">
+          <Bar data={mockData.pipelineValue} options={commonOptions} />
+        </div>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Taux de Conversion par Étape</h3>
+        <div className="h-[300px]">
+          <Bar 
+            data={mockData.conversionRates}
+            options={{
+              ...commonOptions,
+              indexAxis: 'y' as const,
+            }}
+          />
+        </div>
+      </div>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Valeur Pipeline</h4>
+        <p className="text-3xl font-bold text-blue-600">7.8M€</p>
+        <p className="text-sm text-green-600 mt-2">↑ 12% vs période précédente</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Taux de Conversion Global</h4>
+        <p className="text-3xl font-bold text-blue-600">32%</p>
+        <p className="text-sm text-green-600 mt-2">↑ 2% vs période précédente</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Durée Moyenne du Cycle</h4>
+        <p className="text-3xl font-bold text-blue-600">45j</p>
+        <p className="text-sm text-red-600 mt-2">↑ 5j vs période précédente</p>
+      </div>
+    </div>
+  </>
+);
+
+const ActivityReport = ({ commonOptions }: { commonOptions: any }) => (
+  <>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Réunions par Commercial</h3>
+        <div className="h-[300px]">
+          <Bar 
+            data={{
+              labels: ['Alice Smith', 'Bob Johnson', 'Carol Williams', 'David Brown'],
+              datasets: [{
+                label: 'Réunions Qualifiées',
+                data: [45, 38, 42, 31],
+                backgroundColor: 'rgba(37, 99, 235, 0.6)',
+              }]
+            }} 
+            options={commonOptions} 
+          />
+        </div>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Évolution des Réunions</h3>
+        <div className="h-[300px]">
+          <Line 
+            data={{
+              labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun'],
+              datasets: [{
+                label: 'Nombre de Réunions',
+                data: [28, 35, 42, 38, 45, 48],
+                borderColor: 'rgb(37, 99, 235)',
+                backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                fill: true,
+              }]
+            }}
+            options={commonOptions}
+          />
+        </div>
+      </div>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Réunions Qualifiées</h4>
+        <p className="text-3xl font-bold text-blue-600">156</p>
+        <p className="text-sm text-green-600 mt-2">↑ 8% vs période précédente</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Taux de Qualification</h4>
+        <p className="text-3xl font-bold text-blue-600">75%</p>
+        <p className="text-sm text-green-600 mt-2">↑ 5% vs période précédente</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Réunions par Semaine</h4>
+        <p className="text-3xl font-bold text-blue-600">12</p>
+        <p className="text-sm text-green-600 mt-2">↑ 2 vs période précédente</p>
+      </div>
+    </div>
+  </>
+);
+
+const AdvancedAnalysisReport = ({ commonOptions }: { commonOptions: any }) => (
+  <>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Corrélation MEDDIC - Taux de Succès</h3>
+        <div className="h-[300px]">
+          <Line 
+            data={{
+              labels: ['50-60%', '60-70%', '70-80%', '80-90%', '90-100%'],
+              datasets: [{
+                label: 'Taux de Succès',
+                data: [20, 35, 55, 75, 90],
+                borderColor: 'rgb(37, 99, 235)',
+                backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                fill: true,
+              }]
+            }}
+            options={commonOptions}
+          />
+        </div>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Impact des Critères MEDDIC</h3>
+        <div className="h-[300px]">
+          <Bar 
+            data={{
+              labels: ['Metrics', 'Economic Buyer', 'Decision Criteria', 'Decision Process', 'Identify Pain', 'Champion'],
+              datasets: [{
+                label: 'Impact sur le Taux de Succès',
+                data: [0.8, 0.9, 0.75, 0.85, 0.7, 0.95],
+                backgroundColor: 'rgba(37, 99, 235, 0.6)',
+              }]
+            }}
+            options={{
+              ...commonOptions,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  max: 1,
+                  ticks: {
+                    callback: (value: any) => `${value * 100}%`
+                  }
+                }
+              }
+            }}
+          />
+        </div>
+      </div>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Critère le Plus Impactant</h4>
+        <p className="text-3xl font-bold text-blue-600">Champion</p>
+        <p className="text-sm text-blue-600 mt-2">95% de corrélation</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Score Minimum Recommandé</h4>
+        <p className="text-3xl font-bold text-blue-600">75%</p>
+        <p className="text-sm text-blue-600 mt-2">Pour 50% de chances de succès</p>
+      </div>
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Prédiction Actuelle</h4>
+        <p className="text-3xl font-bold text-blue-600">68%</p>
+        <p className="text-sm text-blue-600 mt-2">Taux de succès prévu</p>
+      </div>
+    </div>
+  </>
+);
+
 export default function ReportsPage() {
   const { t } = useLanguage();
   const [selectedReport, setSelectedReport] = useState('meddic');
@@ -114,6 +320,22 @@ export default function ReportsPage() {
         position: 'bottom' as const,
       },
     },
+  };
+
+  // Fonction pour rendre le rapport sélectionné
+  const renderSelectedReport = () => {
+    switch (selectedReport) {
+      case 'meddic':
+        return <MeddicPerformanceReport commonOptions={commonOptions} />;
+      case 'pipeline':
+        return <PipelineAnalysisReport commonOptions={commonOptions} />;
+      case 'activity':
+        return <ActivityReport commonOptions={commonOptions} />;
+      case 'analysis':
+        return <AdvancedAnalysisReport commonOptions={commonOptions} />;
+      default:
+        return <MeddicPerformanceReport commonOptions={commonOptions} />;
+    }
   };
 
   return (
@@ -162,70 +384,8 @@ export default function ReportsPage() {
         ))}
       </div>
 
-      {/* Contenu des rapports */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Évolution du score MEDDIC */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Évolution du Score MEDDIC</h3>
-          <div className="h-[300px]">
-            <Line data={mockData.meddicTrends} options={commonOptions} />
-          </div>
-        </div>
-
-        {/* Distribution du pipeline */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Distribution du Pipeline</h3>
-          <div className="h-[300px]">
-            <Bar data={mockData.pipelineValue} options={commonOptions} />
-          </div>
-        </div>
-
-        {/* Performance de l'équipe */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Performance MEDDIC par Commercial</h3>
-          <div className="h-[300px]">
-            <Radar data={mockData.teamPerformance} options={commonOptions} />
-          </div>
-        </div>
-
-        {/* Taux de conversion */}
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-lg font-semibold mb-4">Taux de Conversion par Étape</h3>
-          <div className="h-[300px]">
-            <Bar 
-              data={mockData.conversionRates}
-              options={{
-                ...commonOptions,
-                indexAxis: 'y' as const,
-              }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* KPIs récapitulatifs */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h4 className="text-sm font-medium text-gray-500 mb-2">Score MEDDIC Moyen</h4>
-          <p className="text-3xl font-bold text-blue-600">78%</p>
-          <p className="text-sm text-green-600 mt-2">↑ 4% vs période précédente</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h4 className="text-sm font-medium text-gray-500 mb-2">Valeur Pipeline</h4>
-          <p className="text-3xl font-bold text-blue-600">7.8M€</p>
-          <p className="text-sm text-green-600 mt-2">↑ 12% vs période précédente</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h4 className="text-sm font-medium text-gray-500 mb-2">Taux de Conversion</h4>
-          <p className="text-3xl font-bold text-blue-600">32%</p>
-          <p className="text-sm text-green-600 mt-2">↑ 2% vs période précédente</p>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-md">
-          <h4 className="text-sm font-medium text-gray-500 mb-2">Réunions Qualifiées</h4>
-          <p className="text-3xl font-bold text-blue-600">156</p>
-          <p className="text-sm text-green-600 mt-2">↑ 8% vs période précédente</p>
-        </div>
-      </div>
+      {/* Contenu du rapport sélectionné */}
+      {renderSelectedReport()}
     </div>
   );
 }
