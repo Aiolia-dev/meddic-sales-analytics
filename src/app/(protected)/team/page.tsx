@@ -125,7 +125,8 @@ export default function TeamAnalysis() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">{t('nav.team')}</h1>
         <p className="text-gray-600">
-          Analyse détaillée des performances de l&apos;équipe commerciale selon la méthodologie MEDDIC
+          Analyse détaillée des performances de l&apos;équipe commerciale basée sur la méthodologie MEDDIC.
+          Sélectionnez un membre de l&apos;équipe pour voir ses métriques détaillées.
         </p>
       </div>
 
