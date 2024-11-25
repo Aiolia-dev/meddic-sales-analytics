@@ -3,24 +3,102 @@
 import { useState } from 'react';
 import { useLanguage } from '@/hooks/useLanguage';
 
-// Mock data
-const mockData = {
-  globalScore: 78,
-  meetingsAnalyzed: 156,
-  averageDuration: '45 minutes',
-  teamMembers: [
-    { name: 'Alice Smith', score: 85, meetings: 42 },
-    { name: 'Bob Johnson', score: 72, meetings: 38 },
-    { name: 'Carol Williams', score: 79, meetings: 45 },
-    { name: 'David Brown', score: 68, meetings: 31 }
-  ],
-  meddicScores: {
-    metrics: 82,
-    economicBuyer: 75,
-    decisionCriteria: 80,
-    decisionProcess: 73,
-    identifyPain: 85,
-    champion: 78
+// Mock data avec des données différentes pour chaque période
+const mockDataByPeriod = {
+  day: {
+    globalScore: 72,
+    meetingsAnalyzed: 8,
+    averageDuration: '42 minutes',
+    teamMembers: [
+      { name: 'Alice Smith', score: 78, meetings: 3 },
+      { name: 'Bob Johnson', score: 65, meetings: 2 },
+      { name: 'Carol Williams', score: 70, meetings: 2 },
+      { name: 'David Brown', score: 62, meetings: 1 }
+    ],
+    meddicScores: {
+      metrics: 75,
+      economicBuyer: 68,
+      decisionCriteria: 73,
+      decisionProcess: 65,
+      identifyPain: 78,
+      champion: 70
+    }
+  },
+  week: {
+    globalScore: 75,
+    meetingsAnalyzed: 35,
+    averageDuration: '44 minutes',
+    teamMembers: [
+      { name: 'Alice Smith', score: 82, meetings: 12 },
+      { name: 'Bob Johnson', score: 69, meetings: 8 },
+      { name: 'Carol Williams', score: 74, meetings: 9 },
+      { name: 'David Brown', score: 65, meetings: 6 }
+    ],
+    meddicScores: {
+      metrics: 78,
+      economicBuyer: 72,
+      decisionCriteria: 76,
+      decisionProcess: 69,
+      identifyPain: 82,
+      champion: 74
+    }
+  },
+  month: {
+    globalScore: 78,
+    meetingsAnalyzed: 156,
+    averageDuration: '45 minutes',
+    teamMembers: [
+      { name: 'Alice Smith', score: 85, meetings: 42 },
+      { name: 'Bob Johnson', score: 72, meetings: 38 },
+      { name: 'Carol Williams', score: 79, meetings: 45 },
+      { name: 'David Brown', score: 68, meetings: 31 }
+    ],
+    meddicScores: {
+      metrics: 82,
+      economicBuyer: 75,
+      decisionCriteria: 80,
+      decisionProcess: 73,
+      identifyPain: 85,
+      champion: 78
+    }
+  },
+  quarter: {
+    globalScore: 82,
+    meetingsAnalyzed: 420,
+    averageDuration: '47 minutes',
+    teamMembers: [
+      { name: 'Alice Smith', score: 88, meetings: 125 },
+      { name: 'Bob Johnson', score: 76, meetings: 98 },
+      { name: 'Carol Williams', score: 83, meetings: 112 },
+      { name: 'David Brown', score: 73, meetings: 85 }
+    ],
+    meddicScores: {
+      metrics: 85,
+      economicBuyer: 79,
+      decisionCriteria: 84,
+      decisionProcess: 77,
+      identifyPain: 88,
+      champion: 82
+    }
+  },
+  year: {
+    globalScore: 85,
+    meetingsAnalyzed: 1840,
+    averageDuration: '46 minutes',
+    teamMembers: [
+      { name: 'Alice Smith', score: 92, meetings: 520 },
+      { name: 'Bob Johnson', score: 81, meetings: 445 },
+      { name: 'Carol Williams', score: 87, meetings: 485 },
+      { name: 'David Brown', score: 78, meetings: 390 }
+    ],
+    meddicScores: {
+      metrics: 89,
+      economicBuyer: 83,
+      decisionCriteria: 87,
+      decisionProcess: 82,
+      identifyPain: 91,
+      champion: 85
+    }
   }
 };
 
@@ -29,6 +107,9 @@ const timeFilters = ['day', 'week', 'month', 'quarter', 'year'];
 export default function DashboardPage() {
   const [selectedTimeFilter, setSelectedTimeFilter] = useState('month');
   const { t } = useLanguage();
+
+  // Utiliser les données correspondant à la période sélectionnée
+  const mockData = mockDataByPeriod[selectedTimeFilter];
 
   return (
     <div className="space-y-6">
