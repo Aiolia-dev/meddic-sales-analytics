@@ -108,12 +108,24 @@ function MeetingStatus({ status }: { status: string }) {
 }
 
 const CompletedMeetingScores = ({ scores }) => {
+  const { t } = useLanguage();
+  
+  // Mapping des clés de score vers les clés de traduction
+  const criteriaTranslationKeys = {
+    metrics: 'dashboard.meddic.metrics',
+    economic_buyer: 'dashboard.meddic.economicBuyer',
+    decision_criteria: 'dashboard.meddic.decisionCriteria',
+    decision_process: 'dashboard.meddic.decisionProcess',
+    identify_pain: 'dashboard.meddic.identifyPain',
+    champion: 'dashboard.meddic.champion'
+  };
+
   return (
     <div className="space-y-4">
       {Object.entries(scores).map(([criterion, score]) => (
         <div key={criterion} className="flex items-center gap-4">
-          <span className="w-32 text-sm text-gray-600">
-            {criterion.charAt(0).toUpperCase() + criterion.slice(1)}
+          <span className="w-48 text-sm text-gray-600">
+            {t(criteriaTranslationKeys[criterion])}
           </span>
           <div className="flex-1">
             <HorizontalProgressBar percentage={score} />

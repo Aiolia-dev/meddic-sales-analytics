@@ -16,6 +16,7 @@ export const translations = {
     'language.select': 'Language',
     'language.en': 'English',
     'language.fr': 'French',
+    'header.logout': 'Sign out',
     
     // Navigation
     'nav.dashboard': 'Dashboard',
@@ -62,6 +63,7 @@ export const translations = {
     'language.select': 'Langue',
     'language.en': 'Anglais',
     'language.fr': 'Français',
+    'header.logout': 'Se déconnecter',
     
     // Navigation
     'nav.dashboard': 'Tableau de bord',
