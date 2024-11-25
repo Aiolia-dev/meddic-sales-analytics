@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useLanguage } from '@/hooks/useLanguage';
+import { HorizontalProgressBar } from '@/components/ui/HorizontalProgressBar';
 
 // Données fictives des réunions
 const mockMeetings = [
@@ -91,22 +92,6 @@ const mockMeetings = [
   },
 ];
 
-// Composant pour afficher le score MEDDIC avec un code couleur
-function MeddicScore({ score }: { score: number }) {
-  let colorClass = 'bg-red-100 text-red-800';
-  if (score >= 80) {
-    colorClass = 'bg-green-100 text-green-800';
-  } else if (score >= 60) {
-    colorClass = 'bg-yellow-100 text-yellow-800';
-  }
-
-  return (
-    <span className={`px-2 py-1 rounded-full text-sm font-medium ${colorClass}`}>
-      {score}%
-    </span>
-  );
-}
-
 // Composant pour afficher le statut de la réunion
 function MeetingStatus({ status }: { status: string }) {
   const statusClasses = {
@@ -121,6 +106,24 @@ function MeetingStatus({ status }: { status: string }) {
     </span>
   );
 }
+
+const CompletedMeetingScores = ({ scores }) => {
+  return (
+    <div className="space-y-4">
+      {Object.entries(scores).map(([criterion, score]) => (
+        <div key={criterion} className="flex items-center gap-4">
+          <span className="w-32 text-sm text-gray-600">
+            {criterion.charAt(0).toUpperCase() + criterion.slice(1)}
+          </span>
+          <div className="flex-1">
+            <HorizontalProgressBar percentage={score} />
+          </div>
+          <span className="text-sm text-gray-600 w-12 text-right">{score}%</span>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 export default function MeetingsPage() {
   const { t } = useLanguage();
@@ -239,32 +242,7 @@ export default function MeetingsPage() {
                 {/* Score MEDDIC - Uniquement pour les réunions terminées */}
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold mb-4">Score MEDDIC</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">Metrics</p>
-                      <MeddicScore score={selectedMeeting.meddic.metrics} />
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">Economic Buyer</p>
-                      <MeddicScore score={selectedMeeting.meddic.economic_buyer} />
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">Decision Criteria</p>
-                      <MeddicScore score={selectedMeeting.meddic.decision_criteria} />
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">Decision Process</p>
-                      <MeddicScore score={selectedMeeting.meddic.decision_process} />
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">Identify Pain</p>
-                      <MeddicScore score={selectedMeeting.meddic.identify_pain} />
-                    </div>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="text-sm text-gray-600 mb-1">Champion</p>
-                      <MeddicScore score={selectedMeeting.meddic.champion} />
-                    </div>
-                  </div>
+                  <CompletedMeetingScores scores={selectedMeeting.meddic} />
                 </div>
 
                 {/* Notes et prochaines étapes - Uniquement pour les réunions terminées */}
